@@ -5,12 +5,14 @@ import HomePage from './pages/home';
 const FixedSizePage = lazy(() => import('./pages/fixed'));
 const DynamicSizePage = lazy(() => import('./pages/dynamic'));
 const SlotPage = lazy(() => import('./pages/slot'));
+const ReactivePage = lazy(() => import('./pages/reactive'));
 
 const routes = [
   { name: 'Home', href: '/' },
   { name: 'Fixed Size', href: '/fixed' },
   { name: 'Dynamic Size', href: '/dynamic' },
   { name: 'Slot', href: '/slot' },
+  { name: 'Reactive', href: '/reactive' },
 ];
 
 const App: SolidComponent = () => {
@@ -36,6 +38,7 @@ const App: SolidComponent = () => {
           <Route path="/fixed" component={FixedSizePage} />
           <Route path="/dynamic" component={DynamicSizePage} />
           <Route path="/slot" component={SlotPage} />
+          <Route path="/reactive" component={Reactive} />
         </Routes>
       </main>
     </div>
