@@ -169,6 +169,7 @@ export class Virtual {
         this.sizesMap.delete(id);
       }
     }
+    this.forceUpdate(this.params.offset);
   }
 
   private isFixedSize() {

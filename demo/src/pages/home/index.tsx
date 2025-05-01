@@ -21,6 +21,8 @@ const HomePage = () => {
             <br />
             <span>• Fixed header and footer slot</span>
             <br />
+            <span>• Reactivity for list when data grows/shrinks</span>
+            <br />
           </div>
         </div>
       </div>
