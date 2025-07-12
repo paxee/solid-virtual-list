@@ -30,19 +30,26 @@ const SolidVirtualList = <T,>(props: SolidVirtualListProps<T>) => {
 
   const isHorizontal = createMemo(() => mergedProps.direction === 'horizontal');
   const rendered = createMemo(() => mergedProps.dataSource.slice(start(), end()));
+  const memoizedDataSource = createMemo(() => mergedProps.dataSource);
   const dataSourceIds = createMemo(() => {
     const dataId = mergedProps.dataId;
-    const dataSource = mergedProps.dataSource;
+    const dataSource = memoizedDataSource();
     return dataSource.map((data) => (typeof dataId === 'function' ? dataId(data) : (data as any)?.[dataId]));
   });
+  const [ prevIds, setPrevIds ] = createSignal<string[]>(dataSourceIds());
 
   onMount(() => {
     virtual.forceUpdate((isHorizontal() ? ref()?.scrollLeft : ref()?.scrollTop) || 0);
   });
 
   createEffect(() => {
-    const newDataSourceIds = dataSourceIds();
-    virtual.updateUniqueIds(newDataSourceIds);
+    if (
+      dataSourceIds().length !== prevIds().length || 
+      dataSourceIds().some((id, i) => id !== prevIds()[i])
+    ) {
+      virtual.updateUniqueIds(dataSourceIds());
+      setPrevIds([...dataSourceIds()]);
+    } 
   });
 
   const virtual = new Virtual(
